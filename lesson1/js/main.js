@@ -17,7 +17,7 @@ const renderProducts = (list) => {
     const productList = list.map((product) => renderProduct(product.title, product.price));
     var products = document.querySelector('.products');
     for (let product of productList){
-        products.innerHTML += product
+        products.insertAdjacentHTML('beforeend', product)
     }
 };
 
