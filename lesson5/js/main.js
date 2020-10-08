@@ -19,9 +19,35 @@ const app = new Vue({
         })
     },
 
-    addProduct(product){
-      console.log(product.id_product);
+
+    _createBasketItem(product){
+    return {'id_product': product.id_product,
+            'price': product.price,
+            'product_name': product.product_name,
+            'quantity': 1
+            }
     },
+
+    addProduct(product){
+      let cartItem = this.basket.filter(item => item.id_product == product.id_product);
+      if (cartItem.length != 0) {
+          cartItem[0].quantity++;
+      } else {
+        cartItem = this._createBasketItem(product)
+        this.basket.push(cartItem)
+      }
+    },
+
+    removeProduct(product){
+      const index = this.basket.indexOf(product)
+      if (index > -1) {
+        this.basket[index].quantity --
+        if (this.basket[index].quantity <= 0) {
+          this.basket.splice(index, 1)
+        }
+      }
+    },
+
   },
 
   computed: {
